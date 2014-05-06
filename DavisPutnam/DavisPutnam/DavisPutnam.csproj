@@ -67,6 +67,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Clause.cs" />
+    <Compile Include="Model\Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
