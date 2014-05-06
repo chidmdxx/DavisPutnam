@@ -20,6 +20,17 @@ namespace DavisPutnam.Model
             }
         }
 
+        public static Clause Concat(Clause a, Clause b)
+        {
+            var toReturn = new Clause();
+            toReturn.Elements = new List<string>(a.Elements);
+            foreach(var s in b.Elements)
+            {
+                toReturn.AddElement(s);
+            }
+            return toReturn;
+        }
+
         public Clause Join(Clause join)
         {
             var toReturn = new Clause();
