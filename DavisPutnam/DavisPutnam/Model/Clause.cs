@@ -9,6 +9,18 @@ namespace DavisPutnam.Model
     class Clause
     {
         public List<string> Elements { get; set; }
+        public List<string> Vocabulary
+        {
+            get
+            {
+                var toReturn = new List<string>(Elements);
+                for(var i=0;i<toReturn.Count;i++)
+                {
+                    toReturn[i] = toReturn[i].Replace("!", "");
+                }
+                return toReturn;
+            }
+        }
 
         public Clause() { }
 
@@ -29,6 +41,28 @@ namespace DavisPutnam.Model
                 toReturn.AddElement(s);
             }
             return toReturn;
+        }
+        
+        public bool Tautologia()
+        {
+            foreach(var s in Elements)
+            {
+                if(s.Contains("!"))
+                {
+                    if (Elements.Contains(s.Replace("!", ""))) ;
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (Elements.Contains("!" + s)) ;
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public Clause Join(Clause join)

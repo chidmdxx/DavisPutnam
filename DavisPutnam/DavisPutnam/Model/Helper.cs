@@ -33,5 +33,30 @@ namespace DavisPutnam.Model
             return result;
         }
 
+        public static dp(List<Clause> delta)
+        {
+            var vocabulary=new HashSet<string>();
+            foreach(var clause in delta)
+            {
+                vocabulary.Concat(clause.Vocabulary);
+            }
+            foreach(var phi in vocabulary)
+            {  
+                var gama1=from element in delta 
+                          where element.Elements.Contains(phi)
+                          select element;  //delta.All(x=>x.Elements.Contains(phi));
+                var gama2=from element in delta
+                          where element.Elements.Contains("!"+phi)
+                          select element;
+                foreach(var g1 in gama1)
+                {
+                    foreach(var g2 in gama2)
+                    {
+
+                    }
+                }
+            }
+        }
+
     }
 }
