@@ -34,5 +34,15 @@ namespace DavisPutnam
         {
 
         }
+
+        private void solveDavisPutnamButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void solveLSSButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

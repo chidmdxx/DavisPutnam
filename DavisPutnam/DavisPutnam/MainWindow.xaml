@@ -69,10 +69,17 @@
                  Grid.Row="2"
                  Grid.ColumnSpan="2"
                  Style="{StaticResource blockMockup}"/>
-        <Button Name="solveButton"
-                Grid.Column="2"
-                Grid.Row="3">
-            Solve
-        </Button>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="2"
+                    Grid.Row="3">
+            <Button Name="solveDavisPutnamButton"
+                Click="solveDavisPutnamButton_Click">
+                Solve Davis Putnam
+            </Button>
+            <Button Name="solveLSSButton"
+                    Click="solveLSSButton_Click">
+                Solve LSS
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>

@@ -56,7 +56,7 @@ namespace DavisPutnam.Model
             Clause deltaPrima;
             foreach (var clause in delta)
             {
-                vocabulary.Concat(clause.Vocabulary);
+                vocabulary.Union(clause.Vocabulary);
             }
             foreach (var phi in vocabulary)
             {

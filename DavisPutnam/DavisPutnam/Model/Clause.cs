@@ -8,17 +8,17 @@ namespace DavisPutnam.Model
 {
     class Clause
     {
-        public List<string> Elements { get; set; }
-        public List<string> Vocabulary
+        public HashSet<string> Elements { get; set; }
+        public HashSet<string> Vocabulary
         {
             get
             {
                 var toReturn = new List<string>(Elements);
-                for(var i=0;i<toReturn.Count;i++)
+                for (var i = 0; i < toReturn.Count; i++)
                 {
                     toReturn[i] = toReturn[i].Replace("!", "");
                 }
-                return toReturn;
+                return new HashSet<string>(toReturn);
             }
         }
 
@@ -26,28 +26,25 @@ namespace DavisPutnam.Model
 
         public void AddElement(string element)
         {
-            if (!Elements.Contains(element))
-            {
-                Elements.Add(element);
-            }
+            Elements.Add(element);
         }
 
         public static Clause Concat(Clause a, Clause b)
         {
             var toReturn = new Clause();
-            toReturn.Elements = new List<string>(a.Elements);
-            foreach(var s in b.Elements)
+            toReturn.Elements = new HashSet<string>(a.Elements);
+            foreach (var s in b.Elements)
             {
                 toReturn.AddElement(s);
             }
             return toReturn;
         }
-        
+
         public bool Tautologia()
         {
-            foreach(var s in Elements)
+            foreach (var s in Elements)
             {
-                if(s.Contains("!"))
+                if (s.Contains("!"))
                 {
                     if (Elements.Contains(s.Replace("!", ""))) ;
                     {
