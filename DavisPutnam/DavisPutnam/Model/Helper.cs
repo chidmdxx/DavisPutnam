@@ -74,7 +74,7 @@ namespace DavisPutnam.Model
                         var gamaPrima = g1.Join(g2);
                         if (!gamaPrima.Tautologia())
                         {
-                            deltaPrima = Clause.Concat(deltaPrima, gamaPrima);
+                            deltaPrima = deltaPrima.Join(gamaPrima);
                         }
                     }
                 }
