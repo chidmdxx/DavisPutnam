@@ -24,5 +24,15 @@ namespace DavisPutnam
         {
             InitializeComponent();
         }
+
+        private void transformButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void addClauseButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

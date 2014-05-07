@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Model\Clause.cs" />
     <Compile Include="Model\Helper.cs" />
+    <Compile Include="Model\Transformar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
