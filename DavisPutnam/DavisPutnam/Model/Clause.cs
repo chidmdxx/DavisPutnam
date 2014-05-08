@@ -94,8 +94,9 @@ namespace DavisPutnam.Model
             builder.Append("{");
             foreach (var s in Elements)
             {
-                builder.AppendFormat(" {0}", s);
+                builder.AppendFormat(" {0},", s);
             }
+            builder.Remove(builder.Length - 1, 1); //quita la ultima coma
             builder.Append("}");
             return builder.ToString();
         }

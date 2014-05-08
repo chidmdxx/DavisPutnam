@@ -38,7 +38,7 @@ namespace DavisPutnam
 
         private void addClauseButton_Click(object sender, RoutedEventArgs e)
         {
-            var list = inputBox.Text.Split(' ');
+            var list = inputBox.Text.Trim().Split(' ');
             var temp = new Clause();
             foreach (var s in list)
             {
