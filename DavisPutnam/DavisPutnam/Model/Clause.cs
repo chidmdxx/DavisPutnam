@@ -86,8 +86,8 @@ namespace DavisPutnam.Model
             {
                 builder.AppendFormat(" {0},", s);
             }
-            builder.Remove(builder.Length - 1, 1); //quita la ultima coma
             builder.Append("}");
+            builder.Replace(",}", "}"); 
             return builder.ToString();
         }
     }
