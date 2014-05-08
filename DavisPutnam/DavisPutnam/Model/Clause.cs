@@ -45,21 +45,11 @@ namespace DavisPutnam.Model
 
         public bool Tautologia()
         {
-            foreach (var s in Elements)
+            foreach (var s in Vocabulary)
             {
-                if (s.Contains("!"))
+                if (Elements.Contains(s) && Elements.Contains("!" + s))
                 {
-                    if (Elements.Contains(s.Replace("!", "")))
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    if (Elements.Contains("!" + s))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;
