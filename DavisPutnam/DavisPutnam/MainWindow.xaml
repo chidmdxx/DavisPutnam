@@ -52,6 +52,10 @@
                     Click="addClauseButton_Click">
                 Add Clause
             </Button>
+            <Button Name="clearButton"
+                    Click="clearButton_Click">
+                Clear
+            </Button>
         </StackPanel>
         <TextBlock Grid.Column="0"
                    Grid.Row="1"

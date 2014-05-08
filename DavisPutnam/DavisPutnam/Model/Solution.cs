@@ -6,26 +6,28 @@ using System.Threading.Tasks;
 
 namespace DavisPutnam.Model
 {
-    public static class Helper
+    public class Solution
     {
-        public static string ReplaceAt(this string input, int index, char newChar)
+        public double Time { get; set; }
+        public int Steps { get; set; }
+        public Solution()
         {
-            char[] chars = input.ToCharArray();
-            chars[index] = newChar;
-            return new string(chars);
+
         }
-        public static List<Clause> lsm(List<Clause> delta)
+        
+        public bool lsm(List<Clause> delta)
         {
             var result = new List<Clause>(delta);
             var finish = false;
             var count = 0;
-            while(!finish && count<10000)
+            var limit = 10000;
+            while (!finish && count < limit)
             {
                 result = lss(delta, result);
                 delta.AddRange(result);
                 foreach (var s in delta)
                 {
-                    if(s.Elements.Count==0)
+                    if (s.Elements.Count == 0)
                     {
                         finish = true;
                         break;
@@ -33,10 +35,10 @@ namespace DavisPutnam.Model
                 }
                 count++;
             }
-            return result;
+            return finish;
         }
 
-        public static List<Clause> lss(List<Clause> delta, List<Clause> gama)
+        public List<Clause> lss(List<Clause> delta, List<Clause> gama)
         {
             var result = new List<Clause>();
             foreach (var d in delta)

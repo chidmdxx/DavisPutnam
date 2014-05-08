@@ -8,7 +8,7 @@ namespace DavisPutnam.Model
 {
     class Transformar
     {
-        public List<Clausula> Resultado { get; set; }
+        public List<Clause> Resultado { get; set; }
         public string Enunciado { get; set; }
         public Transformar() { }
 

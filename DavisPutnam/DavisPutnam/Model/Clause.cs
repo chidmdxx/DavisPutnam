@@ -84,5 +84,17 @@ namespace DavisPutnam.Model
             }
             return toReturn;
         }
+
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+            builder.Append("{");
+            foreach (var s in Elements)
+            {
+                builder.AppendFormat(" {0}", s);
+            }
+            builder.Append("}");
+            return builder.ToString();
+        }
     }
 }
