@@ -58,7 +58,7 @@ namespace DavisPutnam
             var satisfasible = solution.dp(Delta);
             var builder = new StringBuilder();
             Result = solution.Delta;
-            builder.AppendFormat("Satisfasible: {0}{1}", !satisfasible, Environment.NewLine);
+            builder.AppendFormat("Satisfasible: {0}{1}", satisfasible, Environment.NewLine);
             builder.AppendFormat("Time in milliseconds: {0}{1}", solution.Time, Environment.NewLine);
             builder.AppendFormat("Steps: {0}{1}", solution.Steps, Environment.NewLine);
             builder.AppendLine("Delta");
@@ -77,7 +77,7 @@ namespace DavisPutnam
             var satisfasible = solution.lsm(Delta);
             var builder = new StringBuilder();
             Result = solution.Delta;
-            builder.AppendFormat("Satisfasible: {0}{1}", !satisfasible, Environment.NewLine);
+            builder.AppendFormat("Satisfasible: {0}{1}", satisfasible, Environment.NewLine);
             builder.AppendFormat("Time in milliseconds: {0}{1}", solution.Time, Environment.NewLine);
             builder.AppendFormat("Steps: {0}{1}", solution.Steps, Environment.NewLine);
             builder.AppendLine("Delta");
