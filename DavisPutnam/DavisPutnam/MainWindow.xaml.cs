@@ -40,6 +40,7 @@ namespace DavisPutnam
                 clauseBox.Text += string.Format("{0}{1}", clause, Environment.NewLine);
             }
             Delta.AddRange(transform.Resultado);
+            inputBox.Text = "";
         }
 
         private void addClauseButton_Click(object sender, RoutedEventArgs e)
@@ -100,6 +101,7 @@ namespace DavisPutnam
             Result.Clear();
             clauseBox.Text = "";
             resultBox.Text = "";
+            inputBox.Text = "";
         }
     }
 }
