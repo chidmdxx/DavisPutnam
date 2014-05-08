@@ -163,17 +163,28 @@ namespace DavisPutnam.Model
                 {
                     break;
                 }
-                indiceElementoAnterior = inicioParentesis - 1;
-                indiceElementoSiguiente = finParentesis + 1;
-                do
+                indiceElementoAnterior = inicioParentesis != 0 ? inicioParentesis - 1 : inicioParentesis;
+                indiceElementoSiguiente = finParentesis != Enunciado.Length - 1 ? finParentesis + 1 : finParentesis;
+                if (inicioParentesis != 0)
                 {
-                    indiceElementoAnterior--;
-                } while (Enunciado[indiceElementoAnterior] != '&' && Enunciado[indiceElementoAnterior] != '|');
-                do
+                    do
+                    {
+                        indiceElementoAnterior--;
+                    } while (Enunciado[indiceElementoAnterior] != '&' &&
+                        Enunciado[indiceElementoAnterior] != '|' &&
+                        indiceElementoAnterior > 0);
+                }
+                if (finParentesis != Enunciado.Length - 1)
                 {
-                    indiceElementoSiguiente++;
-                } while (Enunciado[indiceElementoAnterior] != '&' && Enunciado[indiceElementoAnterior] != '|');
-                var subEnunciado = Enunciado.Substring(indiceElementoAnterior, indiceElementoSiguiente - indiceElementoAnterior);
+
+                    do
+                    {
+                        indiceElementoSiguiente++;
+                    } while (Enunciado[indiceElementoAnterior] != '&' &&
+                        Enunciado[indiceElementoAnterior] != '|' &&
+                        indiceElementoSiguiente < Enunciado.Length - 1);
+
+                } var subEnunciado = Enunciado.Substring(indiceElementoAnterior, indiceElementoSiguiente - indiceElementoAnterior + 1);
                 Enunciado = Enunciado.Replace(subEnunciado, HacerDistribucion(subEnunciado));
             }
         }
@@ -184,11 +195,11 @@ namespace DavisPutnam.Model
             var inicioParentesis = enunciado.IndexOf('(');
             var finParentesis = enunciado.IndexOf(')');
             var dentroParentesis = enunciado.Substring(inicioParentesis, finParentesis - inicioParentesis).Trim('(', ')');
-            var operadorAntes = enunciado[inicioParentesis - 1];
-            var operadorDespues = enunciado[finParentesis + 1];
+            var operadorAntes = inicioParentesis != 0 ? enunciado[inicioParentesis - 1] : '%';
+            var operadorDespues = finParentesis != enunciado.Length - 1 ? enunciado[finParentesis + 1] : '%';
             char operadorDentro;
-            string elementoAntes = enunciado.Substring(0, inicioParentesis - 1).Trim(operadorAntes);
-            string elementoDespues = enunciado.Substring(finParentesis + 1).Trim(operadorDespues);
+            string elementoAntes = operadorAntes != '%' ? enunciado.Substring(0, inicioParentesis - 1).Trim(operadorAntes) : "%";
+            string elementoDespues = operadorDespues != '%' ? enunciado.Substring(finParentesis + 1).Trim(operadorDespues) : "%";
             bool mismoAdentro = (dentroParentesis.Contains('&') && !dentroParentesis.Contains('|')) ||
                 (dentroParentesis.Contains('|') && !dentroParentesis.Contains('&'));
             if (mismoAdentro)
@@ -237,7 +248,7 @@ namespace DavisPutnam.Model
                     builder.Replace(operadorDentro + ")", ")");
                     builder.AppendFormat("{0}{1}", operadorDespues, elementoDespues);
                 }
-                else if(operadorDespues==operadorDentro)
+                else if (operadorDespues == operadorDentro)
                 {
                     builder.AppendFormat("{0}{1}", elementoAntes, operadorAntes);
                     builder.Append('(');
@@ -253,6 +264,7 @@ namespace DavisPutnam.Model
                 {
                     builder.Append(toReturn);
                 }
+                builder.Replace("%", "");
                 toReturn = builder.ToString();
             }
 
@@ -266,12 +278,15 @@ namespace DavisPutnam.Model
             foreach (var clause in enunciadoSplit)
             {
                 var elementos = clause.Split('|');
-                Clause temp=new Clause();
-                foreach(var el in elementos)
+                Clause temp = new Clause();
+                foreach (var el in elementos)
                 {
                     temp.AddElement(el);
                 }
-                Resultado.Add(temp);
+                if (!string.IsNullOrEmpty(clause))
+                {
+                    Resultado.Add(temp);
+                }
             }
         }
     }
