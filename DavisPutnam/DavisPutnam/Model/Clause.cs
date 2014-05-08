@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DavisPutnam.Model
 {
-    class Clause
+    public class Clause
     {
         public HashSet<string> Elements { get; set; }
         public HashSet<string> Vocabulary
@@ -46,14 +46,14 @@ namespace DavisPutnam.Model
             {
                 if (s.Contains("!"))
                 {
-                    if (Elements.Contains(s.Replace("!", ""))) ;
+                    if (Elements.Contains(s.Replace("!", ""))) 
                     {
                         return true;
                     }
                 }
                 else
                 {
-                    if (Elements.Contains("!" + s)) ;
+                    if (Elements.Contains("!" + s)) 
                     {
                         return true;
                     }
