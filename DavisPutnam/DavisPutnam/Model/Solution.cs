@@ -23,7 +23,7 @@ namespace DavisPutnam.Model
             var stopWatch = new Stopwatch();
             var result = new List<Clause>(delta);
             var finish = false;
-            var count = 0;
+            Steps = 0;
             var limit = 10000;
             stopWatch.Start();
             while (!finish && limit != 0)
@@ -32,7 +32,6 @@ namespace DavisPutnam.Model
                 delta.AddRange(result);
                 foreach (var s in delta)
                 {
-                    count++;
                     if (s.Elements.Count == 0)
                     {
                         finish = true;
@@ -44,7 +43,6 @@ namespace DavisPutnam.Model
             }
             stopWatch.Stop();
             Delta = delta;
-            Steps = count;
             Time = stopWatch.ElapsedMilliseconds;
             return !finish;
         }
@@ -58,6 +56,7 @@ namespace DavisPutnam.Model
                 {
                     var temp = d.Join(g);
                     result.Add(temp);
+                    Steps++;
                 }
             }
             return result;
@@ -66,8 +65,9 @@ namespace DavisPutnam.Model
         public bool dp(List<Clause> deltaI)
         {
             var delta = new List<Clause>(deltaI);
+            Delta = new List<Clause>(deltaI);
             var stopWatch = new Stopwatch();
-            var count = 0;
+            Steps = 0;
             stopWatch.Start();
             var vocabulary = new HashSet<string>();
             Clause deltaPrima;
@@ -88,32 +88,32 @@ namespace DavisPutnam.Model
                 {
                     foreach (var g2 in gama2)
                     {
-                        var gamaPrima = g1.Join(g2);
+                        var gamaPrima = Clause.Concat(g1,g2);
+                        gamaPrima.Elements.Remove(phi);
+                        gamaPrima.Elements.Remove("!" + phi);
                         if (!gamaPrima.Tautologia())
                         {
-                            deltaPrima = deltaPrima.Join(gamaPrima);
-                            count++;
+                            Delta.Add(gamaPrima);
+                            deltaPrima = Clause.Concat(deltaPrima,gamaPrima);                            
                         }
+                        Steps++;
                     }
                 }
                 delta.RemoveAll(x => gama1.Contains(x) || gama2.Contains(x));
                 delta.Add(deltaPrima);
+                Delta.Add(deltaPrima);
             }
             foreach (var x in delta)
             {
                 if (x.Elements.Count == 0)
                 {
                     stopWatch.Stop();
-                    Delta = delta;
                     Time = stopWatch.ElapsedMilliseconds;
-                    Steps = count;
                     return false;
                 }
             }
             stopWatch.Stop();
-            Delta = delta;
             Time = stopWatch.ElapsedMilliseconds;
-            Steps = count;
             return true;
         }
     }
