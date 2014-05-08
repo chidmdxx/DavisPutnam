@@ -21,13 +21,13 @@ namespace DavisPutnam
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<Clause> delta;
-        List<Clause> result;
+        List<Clause> Delta { get; set; }
+        List<Clause> Result { get; set; }
         public MainWindow()
         {
             InitializeComponent();
-            delta = new List<Clause>();
-            result = new List<Clause>();
+            Delta = new List<Clause>();
+            Result = new List<Clause>();
         }
 
         private void transformButton_Click(object sender, RoutedEventArgs e)
@@ -43,24 +43,48 @@ namespace DavisPutnam
             {
                 temp.AddElement(s);
             }
-            delta.Add(temp);
+            Delta.Add(temp);
             clauseBox.Text += string.Format("{0}{1}", Environment.NewLine, temp);
         }
 
         private void solveDavisPutnamButton_Click(object sender, RoutedEventArgs e)
         {
-
+            resultBox.Text = "";
+            var solution = new Solution();
+            var satisfasible = solution.dp(Delta);
+            var builder = new StringBuilder();
+            builder.AppendFormat("Satisfasible: {0}{1}",satisfasible,Environment.NewLine);
+            builder.AppendFormat("Time in milliseconds: {0}{1}", solution.Time, Environment.NewLine);
+            builder.AppendFormat("Steps: {0}{1}", solution.Steps, Environment.NewLine);
+            builder.AppendLine("Delta");
+            foreach(var c in solution.Delta)
+            {
+                builder.AppendLine(c.ToString());
+            }
+            resultBox.Text = builder.ToString();
         }
 
         private void solveLSSButton_Click(object sender, RoutedEventArgs e)
         {
-
+            resultBox.Text = "";
+            var solution = new Solution();
+            var satisfasible = solution.lsm(Delta);
+            var builder = new StringBuilder();
+            builder.AppendFormat("Satisfasible: {0}{1}", satisfasible, Environment.NewLine);
+            builder.AppendFormat("Time in milliseconds: {0}{1}", solution.Time, Environment.NewLine);
+            builder.AppendFormat("Steps: {0}{1}", solution.Steps, Environment.NewLine);
+            builder.AppendLine("Delta");
+            foreach (var c in solution.Delta)
+            {
+                builder.AppendLine(c.ToString());
+            }
+            resultBox.Text = builder.ToString();
         }
 
         private void clearButton_Click(object sender, RoutedEventArgs e)
         {
-            delta.Clear();
-            result.Clear();
+            Delta.Clear();
+            Result.Clear();
             clauseBox.Text = "";
             resultBox.Text = "";
         }
