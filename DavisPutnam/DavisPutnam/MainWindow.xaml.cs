@@ -33,7 +33,13 @@ namespace DavisPutnam
 
         private void transformButton_Click(object sender, RoutedEventArgs e)
         {
-
+            var transform = new Transformar() { Enunciado = inputBox.Text };
+            transform.Work();
+            foreach(var clause in transform.Resultado)
+            {
+                clauseBox.Text += string.Format("{0}{1}", clause, Environment.NewLine);
+            }
+            Delta.AddRange(transform.Resultado);
         }
 
         private void addClauseButton_Click(object sender, RoutedEventArgs e)
