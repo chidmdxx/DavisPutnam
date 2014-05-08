@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,19 +9,22 @@ namespace DavisPutnam.Model
 {
     public class Solution
     {
-        public double Time { get; set; }
+        public long Time { get; set; }
         public int Steps { get; set; }
+        public List<Clause> Delta { get; set; }
         public Solution()
         {
 
         }
-        
+
         public bool lsm(List<Clause> delta)
         {
+            var stopWatch = new Stopwatch();
             var result = new List<Clause>(delta);
             var finish = false;
             var count = 0;
             var limit = 10000;
+            stopWatch.Start();
             while (!finish && count < limit)
             {
                 result = lss(delta, result);
@@ -35,6 +39,10 @@ namespace DavisPutnam.Model
                 }
                 count++;
             }
+            stopWatch.Stop();
+            Delta = delta;
+            Steps = count;
+            Time = stopWatch.ElapsedMilliseconds;
             return finish;
         }
 
@@ -54,6 +62,9 @@ namespace DavisPutnam.Model
 
         public bool dp(List<Clause> delta)
         {
+            var stopWatch = new Stopwatch();
+            var count = 0;
+            stopWatch.Start();
             var vocabulary = new HashSet<string>();
             Clause deltaPrima;
             foreach (var clause in delta)
@@ -77,6 +88,7 @@ namespace DavisPutnam.Model
                         if (!gamaPrima.Tautologia())
                         {
                             deltaPrima = deltaPrima.Join(gamaPrima);
+                            count++;
                         }
                     }
                 }
@@ -87,9 +99,17 @@ namespace DavisPutnam.Model
             {
                 if (x.Elements.Count == 0)
                 {
+                    stopWatch.Stop();
+                    Delta = delta;
+                    Time = stopWatch.ElapsedMilliseconds;
+                    Steps = count;
                     return false;
                 }
             }
+            stopWatch.Stop();
+            Delta = delta;
+            Time = stopWatch.ElapsedMilliseconds;
+            Steps = count;
             return true;
         }
     }
