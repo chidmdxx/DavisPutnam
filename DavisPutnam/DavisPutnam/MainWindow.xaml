@@ -45,7 +45,8 @@
                     Grid.Column="2"
                     Grid.Row="0">
             <Button Name="transformButton"
-                    Click="transformButton_Click">
+                    Click="transformButton_Click"
+                    IsEnabled="False">
                 Transform
             </Button>
             <Button Name="addClauseButton"

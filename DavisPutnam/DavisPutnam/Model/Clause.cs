@@ -22,7 +22,10 @@ namespace DavisPutnam.Model
             }
         }
 
-        public Clause() { }
+        public Clause()
+        {
+            Elements = new HashSet<string>();
+        }
 
         public void AddElement(string element)
         {
@@ -46,14 +49,14 @@ namespace DavisPutnam.Model
             {
                 if (s.Contains("!"))
                 {
-                    if (Elements.Contains(s.Replace("!", ""))) 
+                    if (Elements.Contains(s.Replace("!", "")))
                     {
                         return true;
                     }
                 }
                 else
                 {
-                    if (Elements.Contains("!" + s)) 
+                    if (Elements.Contains("!" + s))
                     {
                         return true;
                     }
