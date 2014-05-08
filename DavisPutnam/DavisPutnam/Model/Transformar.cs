@@ -169,6 +169,11 @@ namespace DavisPutnam.Model
                 {
                     do
                     {
+                        if(Enunciado[indiceElementoAnterior]=='(')
+                        {
+                            indiceElementoAnterior++;
+                            break;
+                        }
                         indiceElementoAnterior--;
                     } while (Enunciado[indiceElementoAnterior] != '&' &&
                         Enunciado[indiceElementoAnterior] != '|' &&
@@ -179,6 +184,11 @@ namespace DavisPutnam.Model
 
                     do
                     {
+                        if(Enunciado[indiceElementoSiguiente]==')')
+                        {
+                            indiceElementoSiguiente--;
+                            break;
+                        }
                         indiceElementoSiguiente++;
                     } while (Enunciado[indiceElementoAnterior] != '&' &&
                         Enunciado[indiceElementoAnterior] != '|' &&
