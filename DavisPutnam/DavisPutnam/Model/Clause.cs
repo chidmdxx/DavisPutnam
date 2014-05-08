@@ -75,6 +75,23 @@ namespace DavisPutnam.Model
                     }
                 }
             }
+            foreach(var element in join.Elements)
+            {
+                if (element.Contains('!'))
+                {
+                    if (!Elements.Contains(element.Replace("!", "")))
+                    {
+                        toReturn.AddElement(element);
+                    }
+                }
+                else
+                {
+                    if (!Elements.Contains("!" + element))
+                    {
+                        toReturn.AddElement(element);
+                    }
+                }
+            }
             return toReturn;
         }
 
