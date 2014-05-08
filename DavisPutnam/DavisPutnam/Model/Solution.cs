@@ -17,33 +17,36 @@ namespace DavisPutnam.Model
 
         }
 
-        public bool lsm(List<Clause> delta)
+        public bool lsm(List<Clause> deltaI)
         {
+            var delta = new List<Clause>(deltaI);
             var stopWatch = new Stopwatch();
             var result = new List<Clause>(delta);
             var finish = false;
             var count = 0;
             var limit = 10000;
             stopWatch.Start();
-            while (!finish && count < limit)
+            while (!finish && limit != 0)
             {
                 result = lss(delta, result);
                 delta.AddRange(result);
                 foreach (var s in delta)
                 {
+                    count++;
                     if (s.Elements.Count == 0)
                     {
                         finish = true;
                         break;
                     }
+
                 }
-                count++;
+                limit--;
             }
             stopWatch.Stop();
             Delta = delta;
             Steps = count;
             Time = stopWatch.ElapsedMilliseconds;
-            return finish;
+            return !finish;
         }
 
         public List<Clause> lss(List<Clause> delta, List<Clause> gama)
@@ -53,15 +56,16 @@ namespace DavisPutnam.Model
             {
                 foreach (var g in gama)
                 {
-                    var temp = Clause.Concat(d, g);
+                    var temp = d.Join(g);
                     result.Add(temp);
                 }
             }
             return result;
         }
 
-        public bool dp(List<Clause> delta)
+        public bool dp(List<Clause> deltaI)
         {
+            var delta = new List<Clause>(deltaI);
             var stopWatch = new Stopwatch();
             var count = 0;
             stopWatch.Start();
@@ -69,7 +73,7 @@ namespace DavisPutnam.Model
             Clause deltaPrima;
             foreach (var clause in delta)
             {
-                vocabulary.Union(clause.Vocabulary);
+                vocabulary.UnionWith(clause.Vocabulary);
             }
             foreach (var phi in vocabulary)
             {

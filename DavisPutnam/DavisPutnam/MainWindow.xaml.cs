@@ -28,6 +28,7 @@ namespace DavisPutnam
             InitializeComponent();
             Delta = new List<Clause>();
             Result = new List<Clause>();
+            inputBox.Focus();
         }
 
         private void transformButton_Click(object sender, RoutedEventArgs e)
@@ -44,20 +45,24 @@ namespace DavisPutnam
                 temp.AddElement(s);
             }
             Delta.Add(temp);
-            clauseBox.Text += string.Format("{0}{1}", Environment.NewLine, temp);
+            clauseBox.Text += string.Format("{0}{1}", temp, Environment.NewLine);
+            inputBox.Text = "";
+            inputBox.Focus();
         }
 
         private void solveDavisPutnamButton_Click(object sender, RoutedEventArgs e)
         {
             resultBox.Text = "";
+            Result.Clear();
             var solution = new Solution();
             var satisfasible = solution.dp(Delta);
             var builder = new StringBuilder();
-            builder.AppendFormat("Satisfasible: {0}{1}",satisfasible,Environment.NewLine);
+            Result = solution.Delta;
+            builder.AppendFormat("Satisfasible: {0}{1}", !satisfasible, Environment.NewLine);
             builder.AppendFormat("Time in milliseconds: {0}{1}", solution.Time, Environment.NewLine);
             builder.AppendFormat("Steps: {0}{1}", solution.Steps, Environment.NewLine);
             builder.AppendLine("Delta");
-            foreach(var c in solution.Delta)
+            foreach (var c in Result)
             {
                 builder.AppendLine(c.ToString());
             }
@@ -67,14 +72,16 @@ namespace DavisPutnam
         private void solveLSSButton_Click(object sender, RoutedEventArgs e)
         {
             resultBox.Text = "";
+            Result.Clear();
             var solution = new Solution();
             var satisfasible = solution.lsm(Delta);
             var builder = new StringBuilder();
-            builder.AppendFormat("Satisfasible: {0}{1}", satisfasible, Environment.NewLine);
+            Result = solution.Delta;
+            builder.AppendFormat("Satisfasible: {0}{1}", !satisfasible, Environment.NewLine);
             builder.AppendFormat("Time in milliseconds: {0}{1}", solution.Time, Environment.NewLine);
             builder.AppendFormat("Steps: {0}{1}", solution.Steps, Environment.NewLine);
             builder.AppendLine("Delta");
-            foreach (var c in solution.Delta)
+            foreach (var c in Result)
             {
                 builder.AppendLine(c.ToString());
             }
