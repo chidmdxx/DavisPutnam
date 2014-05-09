@@ -78,6 +78,7 @@ namespace DavisPutnam.Model
             foreach (var phi in vocabulary)
             {
                 deltaPrima = new Clause();
+                bool trabajo = false;
                 var gama1 = from element in delta
                             where element.Elements.Contains(phi)
                             select element;  //delta.All(x=>x.Elements.Contains(phi));
@@ -88,6 +89,7 @@ namespace DavisPutnam.Model
                 {
                     foreach (var g2 in gama2)
                     {
+                        trabajo = true;
                         var gamaPrima = Clause.Concat(g1,g2);
                         gamaPrima.Elements.Remove(phi);
                         gamaPrima.Elements.Remove("!" + phi);
@@ -100,8 +102,11 @@ namespace DavisPutnam.Model
                     }
                 }
                 delta.RemoveAll(x => gama1.Contains(x) || gama2.Contains(x));
-                delta.Add(deltaPrima);
-                Delta.Add(deltaPrima);
+                if (trabajo)
+                {
+                    delta.Add(deltaPrima);
+                    Delta.Add(deltaPrima);
+                }
             }
             foreach (var x in delta)
             {
